@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next';
-import Image from 'next/image'
+import Image from 'next/image';
 import { format, parseISO} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
