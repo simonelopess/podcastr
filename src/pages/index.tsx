@@ -2,8 +2,11 @@ import { GetStaticProps } from 'next';
 import { format, parseISO} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { api } from '../services/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
+import { api } from '../services/api';
+
+import styles from './home.module.scss';
+
 
 type Episode = {
   id: string;
@@ -17,15 +20,19 @@ type Episode = {
   publishedAt: string;
 }
 type HomeProps = {
-  episodes: Array<Episode>
+  latestEpisodes: Array<Episode>,
+  allEpisodes: Array<Episode>
 }
 
-export default function Home(props: HomeProps) {
+export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
 
  return (
-    <div>
-      <h1>Index</h1>
-      <p>{JSON.stringify(props.episodes)}</p>
+    <div className={styles.homepage}>
+      <section className={styles.latestEpisodes}>
+        <h2>Últimos Lançamentos</h2>
+        <ul></ul>
+      </section>
+      <section className={styles.allEpisodes}></section>
     </div>
   )
 }
@@ -52,10 +59,15 @@ export const getStaticProps: GetStaticProps = async () =>{
       description: episode.description, 
       url: episode.file.url
     }
-  })
+  });
+
+  const latestEpisodes = episodes.slice(0,2);
+  const allEpisodes = episodes.slice(2, episodes.length);
+
   return {
     props: {
-      episodes: episodes,
+      latestEpisodes,
+      allEpisodes
     }, 
     revalidate: 60 * 60 * 8, //segundos, minutos, horas - a cada 8 horas 
   }
