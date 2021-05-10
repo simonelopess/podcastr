@@ -71,7 +71,7 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
             {allEpisodes.map(episode => {
               return (
                 <tr key={episode.id}>
-                  <td>
+                  <td style={{width: 70}}>
                     <Image 
                     width={120}
                     height={120}
@@ -84,7 +84,7 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
                     <a href="">{episode.title}</a>
                   </td>
                   <td>{episode.members}</td>
-                  <td>{episode.publishedAt}</td>
+                  <td style={{width: 100}}>{episode.publishedAt}</td>
                   <td>{episode.durationAsString}</td>
                   <td>
                     <button type="button">
@@ -114,7 +114,7 @@ export const getStaticProps: GetStaticProps = async () =>{
   const episodes = data.map(episode => {
     return {
       id: episode.id,
-      titulo: episode.title, 
+      title: episode.title, 
       thumbnail: episode.thumbnail,
       members: episode.members,
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', {locale: ptBR}),
